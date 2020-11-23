@@ -21,7 +21,7 @@ if __name__ == "__main__":
 		print(a_client)
 ```
 
-The more detailed documentation - 
+The more detailed documentation - https://pyforecho.readthedocs.io/en/latest/
 
 ## Changelog
 
