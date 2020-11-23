@@ -22,3 +22,9 @@ if __name__ == "__main__":
 ```
 
 The more detailed documentation - 
+
+## Changelog
+
+### 0.0.1 23rd Nov 2020
+*Released*
+- Bare bones version with only the ability to create, lookup and get all contacts
