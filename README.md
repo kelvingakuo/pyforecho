@@ -16,7 +16,7 @@ from pyforecho import EchoMobile
 if __name__ == "__main__":
 	echo = EchoMobile(acc_id = 12345, eid = 6789, e_passw = "pass")
 	echo.test_connection()
-	client = echo.clients.get_client(phone = "254718953619")
+	client = echo.clients.lookup(phone = "254718953619")
 	for a_client in echo.clients.get_all(since = 1604188800, group_name = "MYGROUP"):
 		print(a_client)
 ```

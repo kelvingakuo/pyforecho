@@ -8,7 +8,7 @@ class Client(object):
 		self.requestor = requests_class
 		self.logger = logger
 
-	def get_client(self, phone, fields = None):
+	def lookup(self, phone, fields = None):
 		""" Search for a client using a phone number (in ISO format)
 
 		Params:
