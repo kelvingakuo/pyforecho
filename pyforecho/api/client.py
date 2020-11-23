@@ -8,7 +8,7 @@ class Client(object):
 		self.requestor = requests_class
 		self.logger = logger
 
-	def lookup(self, phone, fields = None):
+	def get_client(self, phone, fields = None):
 		""" Search for a client using a phone number (in ISO format)
 
 		Params:
@@ -61,7 +61,7 @@ class Client(object):
 			else:
 				self.logger.info("Client created!")
 			
-	def list_all(self, since, group_name, fields = [], page = 1):
+	def get_all(self, since, group_name, fields = [], page = 1):
 		""" Return a list of all clients in a contact group
 
 		Params:
