@@ -1,5 +1,7 @@
 from os import path, remove
 
+import base64
+import hashlib
 import json
 import logging
 import requests
@@ -20,12 +22,33 @@ logger.addHandler(console_logger)
 
 # ================ HTTP Request
 class MakeRequests(object):
-	def __init__(self, headers):
-		self.headers = headers
+	def __init__(self, eid, passw, acc_id):
+		self.eid = eid
+		self.passw = passw
+		self.acc_id = acc_id
+		
 		retries = Retry(total = 10, backoff_factor = 2, status_forcelist = [500, 502, 503, 504, 404])
 		self.sess = requests.Session()
 		self.sess.mount("https://", HTTPAdapter(max_retries = retries))
 		self.timeout = 10
+
+		self.headers = {
+			"Content-Type": "application/x-www-form-urlencoded",
+			"authorization": self.__auth_header("basic"),
+			"account-id": self.__auth_header("acc")
+		}
+
+	def __auth_header(self, what):
+		""" Helper method to generate basic authentication header to connect to the EchoMobile
+		"""
+		if(what == "basic"):
+			conc = f"{self.eid}:{self.passw}"
+			base64_user_password = base64.b64encode(conc.encode())
+			enc = f"Basic {base64_user_password.decode()}"
+			return enc
+		elif(what == "acc"):
+			enc_acc = base64.b64encode(str(self.acc_id).encode())
+			return enc_acc.decode()
 
 	def make_request(self, endpoint, data):
 		""" Helper for HTTP requests

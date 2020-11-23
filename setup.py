@@ -16,6 +16,7 @@ setuptools.setup(
     install_requires=[
         "requests==2.25.0"
     ],
+	python_requires = ">3.6.0",
     classifiers=[
         "Programming Language :: Python :: 3.5",
         "License :: OSI Approved :: MIT License",

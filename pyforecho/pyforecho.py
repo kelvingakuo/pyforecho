@@ -3,15 +3,30 @@ import sys
 if(sys.version_info <= (2,7)):
 	sys.exit("Sorry. This package doesn't support Python 2.7 or prior. v3.6 and above preferred")
 
-
-import base64
-import hashlib
 import json
 import pprint
 import time
 
 from utils import MakeRequests
 from utils import logger
+
+from .api import account
+from .api import activity_log
+from .api import client
+from .api import entity
+from .api import field
+from .api import inbox
+from .api import message
+from .api import msg_log
+from .api import notice
+from .api import payment
+from .api import product
+from .api import report
+from .api import sale
+from .api import serial
+from .api import survey
+from .api import transaction
+
 
 class EchoMobile(object):
 	def __init__(self, acc_id, eid = None, e_passw = None, user_name = None, user_pass = None):
@@ -48,25 +63,8 @@ class EchoMobile(object):
 				self.eid = user_name
 				self.passw = user_pass
 
-			self.headers = {
-				"Content-Type": "application/x-www-form-urlencoded",
-				"authorization": self.__auth_header("basic"),
-				"account-id": self.__auth_header("acc")
-			}
 			self.md5_pw = "a812801c81bdf2"
-			self.reqs_class = MakeRequests(self.headers)
-
-	def __auth_header(self, what):
-		""" Helper method to generate basic authentication header to connect to the EchoMobile
-		"""
-		if(what == "basic"):
-			conc = f"{self.eid}:{self.passw}"
-			base64_user_password = base64.b64encode(conc.encode())
-			enc = f"Basic {base64_user_password.decode()}"
-			return enc
-		elif(what == "acc"):
-			enc_acc = base64.b64encode(str(self.acc_id).encode())
-			return enc_acc.decode()
+			self.reqs_class = MakeRequests(self.eid, self.passw, self.acc_id)
 
 	def test_connection(self):
 		""" Run this to check if authentication with EchoMobile was successful
@@ -75,6 +73,3 @@ class EchoMobile(object):
 		res = self.reqs_class.make_request("/api/clients/lookup", search)
 		if(res != 1):
 			logger.info("Successful connection.")
-
-	def __make_digest():
-		pass
