@@ -4,6 +4,7 @@ class Client(object):
 
 		Params:
 			requests_class (obj) - The util that makes HTTP requests
+			logger (obj) - A configured object of the 'logging' module
 		"""
 		self.requestor = requests_class
 		self.logger = logger
@@ -25,7 +26,11 @@ class Client(object):
 		if(resp == 1):
 			resp_ = {}
 		else:
-			resp_ = resp["client"]
+			if(resp["message"] == "Contact not yet registered"):
+				self.logger.error("Contact not yet registered")
+				resp_ = {}
+			else:
+				resp_ = resp["client"]
 
 		return resp_
 

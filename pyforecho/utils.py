@@ -50,7 +50,7 @@ class MakeRequests(object):
 			enc_acc = base64.b64encode(str(self.acc_id).encode())
 			return enc_acc.decode()
 
-	def make_request(self, endpoint, data):
+	def make_request(self, endpoint, data = None, req = "POST"):
 		""" Helper for HTTP requests
 
 		Params:
@@ -65,10 +65,16 @@ class MakeRequests(object):
 		target = f"https://www.echomobile.io{endpoint}"
 
 		try:
-			resp = self.sess.post(target,
-					data = data,
-					headers = self.headers,
-					timeout = self.timeout
+			if(req == "POST"):
+				resp = self.sess.post(target,
+						data = data,
+						headers = self.headers,
+						timeout = self.timeout
+				)
+			elif(req == "GET"):
+				resp = self.sess.get(target,
+						headers = self.headers,
+						timeout = self.timeout
 				)
 
 			if(resp.status_code != 200):
@@ -79,4 +85,3 @@ class MakeRequests(object):
 				return json.loads(resp.text)
 		except Exception as e:
 			logger.error(e)
-			
