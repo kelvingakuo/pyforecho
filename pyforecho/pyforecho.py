@@ -10,22 +10,22 @@ import time
 from utils import MakeRequests
 from utils import logger
 
-from .api import account
-from .api import activity_log
-from .api import client
-from .api import entity
-from .api import field
-from .api import inbox
-from .api import message
-from .api import msg_log
-from .api import notice
-from .api import payment
-from .api import product
-from .api import report
-from .api import sale
-from .api import serial
-from .api import survey
-from .api import transaction
+from api import account
+from api import activity_log
+from api import client
+from api import entity
+from api import field
+from api import inbox
+from api import message
+from api import msg_log
+from api import notice
+from api import payment
+from api import product
+from api import report
+from api import sale
+from api import serial
+from api import survey
+from api import transaction
 
 
 class EchoMobile(object):
@@ -66,10 +66,11 @@ class EchoMobile(object):
 			self.md5_pw = "a812801c81bdf2"
 			self.reqs_class = MakeRequests(self.eid, self.passw, self.acc_id)
 
+			self.clients = client.Client(self.reqs_class, logger)
+
 	def test_connection(self):
 		""" Run this to check if authentication with EchoMobile was successful
 		"""
-		search = {"phone": "254712345678"}
-		res = self.reqs_class.make_request("/api/clients/lookup", search)
+		res = self.clients.lookup("254712345678")
 		if(res != 1):
 			logger.info("Successful connection.")

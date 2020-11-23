@@ -72,13 +72,11 @@ class MakeRequests(object):
 				)
 
 			if(resp.status_code != 200):
-				logger.error("ERROR!")
-				logger.error(f"Status code: {resp.status_code}")
+				logger.error(f"Error status code: {resp.status_code}")
 				logger.error(f"{json.loads(resp.text)['message']}")
 				return 1
 			else:
 				return json.loads(resp.text)
 		except Exception as e:
-			logger.error("An error occured")
 			logger.error(e)
 			
