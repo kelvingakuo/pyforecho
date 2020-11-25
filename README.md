@@ -25,6 +25,12 @@ The more detailed documentation - https://pyforecho.readthedocs.io/en/latest/
 
 ## Changelog
 
+### 0.0.2 TODO
+*Added*
+- Survey operations
+- Updating the fields for a client
+- Sending a message
+
 ### 0.0.1 23rd Nov 2020
 *Released*
 - Bare bones version with only the ability to create, lookup and get all contacts
