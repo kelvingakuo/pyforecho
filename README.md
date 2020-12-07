@@ -24,6 +24,10 @@ if __name__ == "__main__":
 The more detailed documentation - https://pyforecho.readthedocs.io/en/latest/
 
 ## Changelog
+### 0.0.4 7th Dec 2020
+*Fixed*
+- Exception Handling. Instead of throwing exceptions, bools are returned instead
+
 ### 0.0.3 7th Dec 2020
 *Added*
 - Survey triggering
