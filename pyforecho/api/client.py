@@ -1,4 +1,7 @@
-class Client(object):
+import pprint
+from .exceptions import PyForEchoException
+
+class Clients(object):
 	def __init__(self, requests_class, logger):
 		""" Init Client object
 
@@ -60,6 +63,7 @@ class Client(object):
 		
 		if(resp == 1):
 			self.logger.error("Could not create client")
+			raise PyForEchoException("Could not create client")
 		else:
 			if(resp["message"] == "Contact updated!"):
 				self.logger.info("Existing client updated!")
@@ -100,5 +104,46 @@ class Client(object):
 				resp_ = []
 
 		return resp_
+
+	def update_client_field(self, client_key, field_key, value):
+		""" Update the contents of a custom field for a client
+		Params:
+			client_key (str) - Unique identifier of the client. Can be found in the field 'key' in the client object returned by lookup() or create() 
+			field_key (str) - Unique idntifier of the field whose value to updated
+			value (str) - The value to update the field with
+
+		"""
+		url = "/api/cms/clientfield"
+		updt = {"ckey": client_key, "fkey": field_key, "value": value}
+
+		res = self.requestor.make_request(url, updt)
+		
+		if(res == 1):
+			self.logger.error(f"Could not update client field {field_key} with value {value}")
+			raise PyForEchoException("Could not update client field")
+		else:
+			if(res["success"]):
+				self.logger.info(res["message"])
+			else:
+				self.logger.error(res["message"])
+
+	def available_for_survey(self, phone):
+		""" Utility method to check if a contact is available for survey
+
+		Params:
+			phone (str) - Phone number in ISO format
+
+		Returns:
+			available (bool) - Whether or not the contact is available for survey
+		"""
+		cli = self.lookup(phone)
+
+		if(cli == {}):
+			self.logger.info("Contact available for survey")
+			available = False
+		else:
+			available = cli["available_for_survey"]
+			
+		return available
 
 

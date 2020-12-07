@@ -1,7 +1,6 @@
 import hashlib
-import pprint
 
-class Message(object):
+class Messages(object):
 	def __init__(self, requests_class, logger):
 		""" Init Survey object
 
@@ -14,9 +13,9 @@ class Message(object):
 		self.md5_pw = "a812801c81bdf2"
 
 	def make_digest(self, phone, message):
-		conc = f"{self.md5_pw}{phone}{message}"
-		pw = conc.encode()
-		m = hashlib.md5(pw)
+		dig_ = ''.join([self.md5_pw, phone, message])
+		dig = dig_.encode()
+		m = hashlib.md5(dig)
 		return m.hexdigest()
 
 	def send_message(self, phone, message, name = None):

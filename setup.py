@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyforecho",
-    version="0.0.1",
+    version="0.0.3",
     author="Kelvin Gakuo",
     author_email="kelvingakuo@gmail.com",
     description="Python wrapper for the Echo Mobile API",

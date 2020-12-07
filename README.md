@@ -24,12 +24,16 @@ if __name__ == "__main__":
 The more detailed documentation - https://pyforecho.readthedocs.io/en/latest/
 
 ## Changelog
-
-### 0.0.2 TODO
+### 0.0.3 7th Dec 2020
 *Added*
-- Survey operations
-- Updating the fields for a client
-- Sending a message
+- Survey triggering
+- Utility to check if client is available for survey
+- Updating client custom field
+- Custom Exceptions
+
+### 0.0.2 7th Dec 2020
+*Added*
+- Sending bulk messages
 
 ### 0.0.1 23rd Nov 2020
 *Released*

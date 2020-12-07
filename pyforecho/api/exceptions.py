@@ -1,0 +1,2 @@
+class PyForEchoException(Exception):
+	pass

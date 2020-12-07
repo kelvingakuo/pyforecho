@@ -65,9 +65,9 @@ class EchoMobile(object):
 
 			self.reqs_class = MakeRequests(self.eid, self.passw, self.acc_id)
 
-			self.clients = client.Client(self.reqs_class, logger)
-			self.surveys = survey.Survey(self.reqs_class, logger)
-			self.bulk_messages = message.Message(self.reqs_class, logger)
+			self.clients = client.Clients(self.reqs_class, logger)
+			self.surveys = survey.Surveys(self.reqs_class, logger)
+			self.bulk_messages = message.Messages(self.reqs_class, logger)
 
 	def test_connection(self):
 		""" Run this to check if authentication with EchoMobile was successful
