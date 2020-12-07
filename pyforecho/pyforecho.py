@@ -63,11 +63,11 @@ class EchoMobile(object):
 				self.eid = user_name
 				self.passw = user_pass
 
-			self.md5_pw = "a812801c81bdf2"
 			self.reqs_class = MakeRequests(self.eid, self.passw, self.acc_id)
 
 			self.clients = client.Client(self.reqs_class, logger)
 			self.surveys = survey.Survey(self.reqs_class, logger)
+			self.bulk_messages = message.Message(self.reqs_class, logger)
 
 	def test_connection(self):
 		""" Run this to check if authentication with EchoMobile was successful
