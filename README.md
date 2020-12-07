@@ -23,7 +23,17 @@ if __name__ == "__main__":
 
 The more detailed documentation - https://pyforecho.readthedocs.io/en/latest/
 
+## TODO
+- surveys.list_surveys() doesn't filter by project_name or project_id
+- /api/cms/project creates a new project instead of listing existing ones
+
 ## Changelog
+### 0.0.6 7th Dec 2020
+*Added*
+- `inbox.list_messages()`
+- `surveys.list_surveys()`
+- `surveys.get_survey_responses()`
+
 ### 0.0.5 7th Dec 2020
 *Fixed*
 - api.clients.create() to include the client's name in the payload

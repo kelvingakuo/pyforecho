@@ -21,6 +21,7 @@ from .api import msg_log
 from .api import notice
 from .api import payment
 from .api import product
+from .api import project
 from .api import report
 from .api import sale
 from .api import serial
@@ -69,6 +70,7 @@ class EchoMobile(object):
 			self.surveys = survey.Surveys(reqs_class, logger)
 			self.bulk_messages = message.Messages(reqs_class, logger)
 			self.inbox = inbox.Inbox(reqs_class, logger)
+			self.projects = project.Projects(reqs_class, logger)
 
 	def test_connection(self):
 		""" Run this to check if authentication with EchoMobile was successful

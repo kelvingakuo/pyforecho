@@ -1,5 +1,6 @@
 import hashlib
 import pprint
+import time
 
 from .client import Clients
 from .exceptions import PyForEchoException
@@ -93,13 +94,70 @@ class Surveys(object):
 			self.logger.error("Client is not available for survey.")
 			return False
 
-	def get_all():
+	def list_surveys(self, project_name = None, project_id = None, max_records = 200):
 		""" Get a list of all surverys
-		"""
-		pass
 
-	def get_survey_responses():
-		""" Get responses for a specific survey
+		Optional:
+			project_name (str) - Name of the project the surveys are under
+			project_id (int) - 
+			max_records (int) - Total records to return. Default is 200 (the max)
 		"""
-		pass
+		if(project_name is not None and project_id is not None):
+			url = f"/api/cms/survey?project_name={project_name}&project_id={project_id}&max={max_records}"
+		else:
+			if(project_name is None):
+				url = f"/api/cms/survey?project_id={project_id}&max={max_records}"
+			elif(project_id is None):
+				url = f"/api/cms/survey?max={max_records}"
+
+		resp = self.requestor.make_request(url, req = "GET")
+
+		if(resp == 1):
+			surs = [] 
+		else:
+			if(resp["success"]):
+				surs =  resp["surveys"]
+			else:
+				self.logger.error(res["message"])
+				surs = []
+
+		return surs
+
+	def get_survey_responses(self, survey_id, since, until = None, page = None, page_indexing = 0):
+		""" Get responses for a specific survey
+
+		Params:
+			survey_id (int) - ID of the survey to send. Found under the Survey's summary tab on the dashboard
+			since - Unix timestamp to filter since
+		Optional:
+			until - Unix timestamp to filter till
+			page - Page of results to get; for pagination
+			page_indexing - Default start page
+
+		Returns:
+			resps (list) - A list of clients with their responses (see the attr client_surveys). List is empty if no responses or if error
+		"""
+		if(until is None):
+			until = int(time.time())
+
+		url = "/api/v2/survey_data"
+
+		gt = {"sid": survey_id, "since": since, "until": until, "page_indexing": page_indexing}
+
+		if(page is not None):
+			gt["page"] = page
+	
+		srs = self.requestor.make_request(url, data = gt)
+
+		if(srs == 1):
+			resps = []
+		else:
+			if(srs["success"]):
+				pprint.pprint(srs)
+				resps = srs["clients"]
+			else:
+				self.logger.error(srs["message"])
+				resps = []
+
+		return resps
 
