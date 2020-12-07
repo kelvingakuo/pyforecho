@@ -2,7 +2,7 @@ import hashlib
 
 class Messages(object):
 	def __init__(self, requests_class, logger):
-		""" Init Survey object
+		""" Init Message object
 
 		Params:
 			requests_class (obj) - The util that makes HTTP requests

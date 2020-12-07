@@ -57,7 +57,8 @@ class Clients(object):
 		url = "/api/cms/client"
 		new = {
 			"phone" : phone, 
-			"group_key": group_key
+			"group_key": group_key,
+			"name": name
 		}
 		resp = self.requestor.make_request(url, new)
 		
