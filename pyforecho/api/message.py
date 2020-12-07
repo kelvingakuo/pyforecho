@@ -28,6 +28,8 @@ class Messages(object):
 		Optional:
 			name (str) - Name of the contact where we don't already have the contact saved as a client. api.clients.lookup(phone) returns empty
 
+		Returns:
+			queued (bool) - Whether or not the message has been successfully queued for sending. Logs helpful message too
 		"""
 		url = "/api/messaging/send"
 		dig = self.make_digest(phone, message)
@@ -39,9 +41,11 @@ class Messages(object):
 		resp = self.requestor.make_request(url, msg)
 		
 		if(resp == 1):
-			pass 
+			return False 
 		else:
 			if(resp["success"]):
 				self.logger.info(resp["message"])
+				return True
 			else:
 				self.logger.error(resp["message"])
+				return False

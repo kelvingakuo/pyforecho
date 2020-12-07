@@ -62,6 +62,9 @@ class Surveys(object):
 
 		Optional:
 			name (str) - Name of the contact where we don't already have the contact saved as a client. api.clients.lookup(phone) returns empty
+
+		Returns:
+			triggered (bool) - Whether or not the survey has been sent. Logs helpful message too
 		"""
 		# Check if available for survey first
 		cli = Clients(self.requestor, self.logger)
@@ -79,15 +82,16 @@ class Surveys(object):
 			res = self.requestor.make_request(url, to_who)
 
 			if(res == 1):
-				pass 
+				return False 
 			else:
 				if(res["success"]):
-					self.logger.info(res["message"])
+					return True
 				else:
 					self.logger.error(res["message"])
-					raise PyForEchoException(res["message"])
+					return False
 		else:
 			self.logger.error("Client is not available for survey.")
+			return False
 
 	def get_all():
 		""" Get a list of all surverys
